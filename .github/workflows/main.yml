@@ -20,6 +20,14 @@ jobs:
           key: ${{ secrets.SERVER_HOST_SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            echo "Starting deployment..."
+            LOCKFILE="/tmp/deployment.lock"
+            if [ -e "$LOCKFILE" ]; then
+              echo "Deployment already in progress. Exiting."
+              exit 0
+            fi
+            touch "$LOCKFILE"
+            trap "rm -f $LOCKFILE" EXIT
             REPO_DIR="${{ secrets.SERVER_REPO_LOCATION }}"
             REPO_NAME="${{ github.event.repository.name }}"
             REPO_BRANCH="${{ secrets.REPO_BRANCH }}"

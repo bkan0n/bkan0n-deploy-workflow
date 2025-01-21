@@ -2,7 +2,11 @@ name: Main Deployment
 
 on:
   workflow_call:
-
+    inputs:
+      environment:
+        description: "Optional GitHub environment to deploy to"
+        required: false
+        type: string
 jobs:
   deploy:
     environment: ${{ inputs.environment || 'default-environment' }}

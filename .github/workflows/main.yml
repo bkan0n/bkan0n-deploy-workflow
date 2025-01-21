@@ -11,12 +11,7 @@ jobs:
   deploy:
     environment: ${{ inputs.environment || 'default-environment' }}
     runs-on: ubuntu-latest
-    steps:
-          # Checkout branch.
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ secrets.REPO_BRANCH }}
-          
+    steps:       
       - name: Update Assets Volume via Git Pull
         uses: appleboy/ssh-action@master
         with:

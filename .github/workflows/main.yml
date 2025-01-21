@@ -51,7 +51,7 @@ jobs:
             docker compose down >/dev/null
             #if [ -n "${{ inputs.environment }}" ]; then
             echo "Using environment: ${{ inputs.environment }}"
-            doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -d" --config ${{ inputs.environment }} --debug
+            doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -d" --config ${{ inputs.environment }} --debug --project ${{ github.event.repository.name }}
             #else
             #   echo "No environment specified. Deploying without environment."
             #   doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -d"

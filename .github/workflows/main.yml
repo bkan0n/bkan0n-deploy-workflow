@@ -7,6 +7,11 @@ on:
         description: "Optional GitHub environment to deploy to"
         required: false
         type: string
+      docker_compose_file:
+        description: "Name of docker compose file"
+        required: false
+        type: string
+        
 jobs:
   deploy:
     environment: ${{ inputs.environment || 'default-environment' }}
@@ -21,13 +26,6 @@ jobs:
           port: 22
           script: |
             echo "Starting deployment..."
-            LOCKFILE="/tmp/deployment.lock"
-            if [ -e "$LOCKFILE" ]; then
-              echo "Deployment already in progress. Exiting."
-              exit 0
-            fi
-            touch "$LOCKFILE"
-            trap "rm -f $LOCKFILE" EXIT
             REPO_DIR="${{ secrets.SERVER_REPO_LOCATION }}"
             REPO_NAME="${{ github.event.repository.name }}"
             REPO_BRANCH="${{ secrets.REPO_BRANCH }}"
@@ -49,10 +47,5 @@ jobs:
 
             # Restart Docker services
             docker compose down >/dev/null
-            #if [ -n "${{ inputs.environment }}" ]; then
-            echo "Using environment: ${{ inputs.environment }}"
-            doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -d" --config ${{ inputs.environment }} --debug --project ${{ github.event.repository.name }}
-            #else
-            #   echo "No environment specified. Deploying without environment."
-            #   doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -d"
-            #fi
+            doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose up -f ${{ inputs.docker_compose_file | default('docker-compose.yml') }} -d"
+

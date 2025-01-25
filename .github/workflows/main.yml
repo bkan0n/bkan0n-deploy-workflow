@@ -13,25 +13,18 @@ on:
         type: string
     secrets:
       SERVER_HOST_IP:
-        description: .
         required: true
       SERVER_HOST_USER:
-        description: .
         required: true
       SERVER_HOST_SSH_PRIVATE_KEY:
-        description: .
         required: true
       SERVER_REPO_LOCATION: 
-        description: .
         required: true
       REPO_BRANCH:
-        description: .
         required: true
       SERVER_HOST_GITHUB_PAT: 
-        description: .
         required: true
       DOPPLER_SERVICE_TOKEN:
-        description: .
         required: true
         
 jobs:

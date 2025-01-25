@@ -29,7 +29,7 @@ on:
         
 jobs:
   deploy:
-    environment: ${{ inputs.environment || 'default-environment' }}
+    environment: ${{ inputs.environment || 'production' }}
     runs-on: ubuntu-latest
     steps:       
       - name: Update Assets Volume via Git Pull

@@ -61,6 +61,6 @@ jobs:
             fi
 
             # Restart Docker services
-            docker compose down >/dev/null
-            doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "docker compose -f ${{ inputs.docker_compose_file || 'docker-compose.yml' }} up -d --build --force-recreate --no-deps"
+            sudo docker compose down >/dev/null
+            sudo doppler run -t ${{ secrets.DOPPLER_SERVICE_TOKEN }} --command "sudo docker compose -f ${{ inputs.docker_compose_file || 'docker-compose.yml' }} up -d --build --force-recreate --no-deps"
 
